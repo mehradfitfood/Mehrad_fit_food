@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR کد | مهراد فیت فود</title>
+<style>
+@font-face { font-family: 'Vazirmatn'; font-weight: 400; src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2'); }
+@font-face { font-family: 'Vazirmatn'; font-weight: 600; src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-SemiBold.woff2') format('woff2'); }
+@font-face { font-family: 'Vazirmatn'; font-weight: 700; src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2'); }
+@font-face { font-family: 'Vazirmatn'; font-weight: 800; src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-ExtraBold.woff2') format('woff2'); }
+</style>
+<style>
+  :root {
+    --green-deep: #1a5e35;
+    --green-mid: #2d8a52;
+    --green-light: #4ab870;
+    --green-pale: #e8f5ee;
+    --green-accent: #00c853;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    direction: rtl;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 40px 36px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
+
+  .brand-logo {
+    font-size: 52px;
+    margin-bottom: 12px;
+  }
+
+  .brand-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--green-deep);
+    margin-bottom: 4px;
+  }
+
+  .brand-sub {
+    font-size: 0.85rem;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .qr-box {
+    background: var(--green-pale);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+    border: 2px dashed #b8ddc6;
+  }
+
+  #qrCanvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  .qr-label {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    color: var(--green-mid);
+    font-weight: 600;
+  }
+
+  .url-display {
+    background: #f4faf6;
+    border: 1.5px solid #c5e4d0;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    color: var(--green-deep);
+    font-weight: 600;
+    margin-bottom: 20px;
+    word-break: break-all;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .url-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #c5e4d0;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+    color: var(--green-deep);
+    outline: none;
+    margin-bottom: 12px;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .url-input:focus { border-color: var(--green-mid); }
+
+  .btn-gen {
+    width: 100%;
+    background: var(--green-deep);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+    margin-bottom: 12px;
+  }
+
+  .btn-download {
+    width: 100%;
+    background: var(--green-pale);
+    color: var(--green-deep);
+    border: 1.5px solid #b8ddc6;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+  }
+
+  .divider {
+    height: 1px;
+    background: #e8ece9;
+    margin: 24px 0;
+  }
+
+  .instructions {
+    text-align: right;
+  }
+
+  .instructions h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin-bottom: 12px;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    background: var(--green-deep);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-text {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  .note {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.8rem;
+    color: #7a5c00;
+    line-height: 1.6;
+    margin-top: 12px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand-logo">🥗</div>
+  <div class="brand-name">مهراد فیت فود</div>
+  <div class="brand-sub">Mehrad Fit Food</div>
+
+  <div class="qr-box">
+    <canvas id="qrCanvas" width="220" height="220"></canvas>
+    <div class="qr-label">📱 اسکن کنید — منوی ما رو ببینید</div>
+  </div>
+
+  <label style="font-size:0.82rem;font-weight:600;color:#333;display:block;text-align:right;margin-bottom:6px">آدرس سایت شما:</label>
+  <input class="url-input" type="text" id="urlInput" placeholder="https://mehradfitfood.ir" value="https://mehradfitfood.ir">
+  <button class="btn-gen" onclick="generateQR()">🔄 تولید QR کد</button>
+  <button class="btn-download" onclick="downloadQR()">⬇️ دانلود QR کد (PNG)</button>
+
+  <div class="divider"></div>
+
+  <div class="instructions">
+    <h4>📋 راهنمای استفاده از QR کد</h4>
+    <div class="step">
+      <div class="step-num">۱</div>
+      <div class="step-text">آدرس سایت‌تون رو در کادر بالا وارد کنید و دکمه تولید QR رو بزنید</div>
+    </div>
+    <div class="step">
+      <div class="step-num">۲</div>
+      <div class="step-text">QR کد رو دانلود کنید و پرینت بگیرید</div>
+    </div>
+    <div class="step">
+      <div class="step-num">۳</div>
+      <div class="step-text">روی میز، ویترین یا بسته‌بندی‌تون قرار بدید تا مشتریان اسکن کنند</div>
+    </div>
+    <div class="note">
+      ⚠️ <strong>مهم:</strong> برای اینکه سایت داخل ایران بدون VPN در دسترس باشد، باید سایت رو روی یک هاستینگ ایرانی مثل <strong>آرسس، ایران‌هاست، میزبان‌فا</strong> یا هر هاستینگ داخلی آپلود کنید. فایل‌های index.html و admin.html رو آپلود کنید و آدرس دامنه رو اینجا وارد کنید.
+    </div>
+  </div>
+</div>
+
+<script>
+// Simple QR Code Generator using canvas (no external library needed for basic QR)
+// We use a CDN for QR generation
+const script = document.createElement('script');
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+script.onload = () => generateQR();
+document.head.appendChild(script);
+
+let qrInstance = null;
+
+function generateQR() {
+  const url = document.getElementById('urlInput').value.trim() || 'https://mehradfitfood.ir';
+  const container = document.createElement('div');
+
+  if (typeof QRCode === 'undefined') {
+    // Fallback: use Google QR API via canvas
+    const canvas = document.getElementById('qrCanvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}&color=1a5e35&bgcolor=e8f5ee`;
+    img.onload = () => { ctx.drawImage(img, 0, 0, 220, 220); };
+    return;
+  }
+
+  const canvas = document.getElementById('qrCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, 220, 220);
+
+  const tempDiv = document.createElement('div');
+  tempDiv.style.display = 'none';
+  document.body.appendChild(tempDiv);
+
+  try {
+    new QRCode(tempDiv, {
+      text: url,
+      width: 220,
+      height: 220,
+      colorDark: '#1a5e35',
+      colorLight: '#e8f5ee',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+    setTimeout(() => {
+      const qrImg = tempDiv.querySelector('img') || tempDiv.querySelector('canvas');
+      if (qrImg) {
+        if (qrImg.tagName === 'CANVAS') {
+          ctx.drawImage(qrImg, 0, 0, 220, 220);
+        } else {
+          const i = new Image();
+          i.onload = () => ctx.drawImage(i, 0, 0, 220, 220);
+          i.src = qrImg.src;
+        }
+      }
+      document.body.removeChild(tempDiv);
+    }, 300);
+  } catch(e) {
+    document.body.removeChild(tempDiv);
+    // Fallback to API
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}&color=1a5e35&bgcolor=e8f5ee`;
+    img.onload = () => { ctx.drawImage(img, 0, 0, 220, 220); };
+  }
+}
+
+function downloadQR() {
+  const canvas = document.getElementById('qrCanvas');
+  const link = document.createElement('a');
+  link.download = 'mehrad-fitfood-qr.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
+
+// Initial fallback render
+window.addEventListener('load', () => {
+  const url = document.getElementById('urlInput').value || 'https://mehradfitfood.ir';
+  const canvas = document.getElementById('qrCanvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}&color=1a5e35&bgcolor=e8f5ee`;
+  img.onload = () => { ctx.drawImage(img, 0, 0, 220, 220); };
+});
+
+document.getElementById('urlInput').addEventListener('input', () => {
+  clearTimeout(window._qrTimer);
+  window._qrTimer = setTimeout(generateQR, 800);
+});
+</script>
+</body>
+</html>
